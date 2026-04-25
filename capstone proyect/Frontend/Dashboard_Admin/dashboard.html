@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Admin | El Buen Sabor</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <div class="logo">🍗 Admin Kial chicken</div>
+            <ul class="menu">
+                <li><a href="#" onclick="cambiarVista('usuarios')" id="btn-usuarios">👥 Usuarios</a></li>
+                <li><a href="#" onclick="cambiarVista('ventas')" id="btn-ventas" class="active">🛒 Nueva Venta</a></li>
+                <li><a href="#" onclick="cambiarVista('clientes')" id="btn-clientes">📋 Registrar Cliente</a></li>
+                <li><a href="#" onclick="cambiarVista('menu')" id="btn-menu">🍽️ Menú / Platos</a></li>
+                <li><a href="#" onclick="cambiarVista('proveedores')" id="btn-proveedores">🚚 Proveedores</a></li>
+                <li><a href="#" onclick="cambiarVista('pagos')" id="btn-pagos">💳 Método Pago</a></li>
+                <li><a href="#" onclick="cambiarVista('inventario')" id="btn-inventario">📦 Inventario</a></li>
+                <li><a href="#" onclick="cambiarVista('dashboard')" id="btn-dashboard">📊 Dashboard</a></li>
+                
+                <li style="margin-top: 50px;"><a href="../Landing_Cliente/index.html">🚪 Cerrar Sesión</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="date-time">Fecha Emisión: 25/04/2026</div>
+                <div class="user-info">Vendedor: Ñufo Ñufales</div>
+            </header>
+
+            <div id="vista-ventas" style="display: block;">
+                <section class="sales-module">
+                    <div class="forms-container">
+                        <div class="form-box">
+                            <h3>Detalle del Pedido</h3>
+                            <div class="input-group">
+                                <label>Tipo Comprobante:</label>
+                                <select>
+                                    <option>Boleta Electrónica</option>
+                                    <option>Factura Electrónica</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Método Pago:</label>
+                                <select>
+                                    <option>Efectivo</option>
+                                    <option>Yape / Plin</option>
+                                    <option>Tarjeta (POS)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-box">
+                            <h3>Info Cliente</h3>
+                            <div class="input-group row">
+                                <label>Documento:</label>
+                                <input type="text" placeholder="DNI / RUC">
+                                <button class="btn-search">🔍 Buscar</button>
+                            </div>
+                            <div class="input-group">
+                                <label>Nombre/Razón:</label>
+                                <input type="text">
+                            </div>
+                            <div class="input-group">
+                                <label>Dirección:</label>
+                                <input type="text">
+                            </div>
+                            <div class="input-group">
+                                <label>Email:</label>
+                                <input type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>PlatoID</th>
+                                    <th>Descripción</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unit.</th>
+                                    <th>SubTotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>PL-001</td>
+                                    <td>1/4 de Pollo a la Brasa + Papas</td>
+                                    <td>2</td>
+                                    <td>S/ 18.00</td>
+                                    <td>S/ 36.00</td>
+                                </tr>
+                                <tr>
+                                    <td>BE-004</td>
+                                    <td>Jarra de Chicha Morada 1L</td>
+                                    <td>1</td>
+                                    <td>S/ 12.00</td>
+                                    <td>S/ 12.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="actions-container">
+                        <div class="totals">
+                            <p>Total Gravada: <span>S/ 40.68</span></p>
+                            <p>IGV (18%): <span>S/ 7.32</span></p>
+                            <h3>Total a Pagar: <span>S/ 48.00</span></h3>
+                        </div>
+                        <div class="buttons">
+                            <button class="btn-pay">Pagar Venta</button>
+                            <button class="btn-secondary">Descargar PDF</button>
+                            <button class="btn-secondary">Descargar XML</button>
+                            <button class="btn-secondary">Consultar Estado Sunat</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="vista-usuarios" style="display: none; padding: 30px;">
+                <h2 style="color: #2c3e50; border-bottom: 2px solid #d32f2f; padding-bottom: 10px;">Gestión de Usuarios</h2>
+            </div>
+
+            <div id="vista-clientes" style="display: none; padding: 30px;">
+                <h2 style="color: #2c3e50; border-bottom: 2px solid #d32f2f; padding-bottom: 10px;">Registrar Nuevo Cliente</h2>
+            </div>
+
+            <div id="vista-menu" style="display: none; padding: 30px;">
+                <h2 style="color: #2c3e50; border-bottom: 2px solid #d32f2f; padding-bottom: 10px;">Catálogo de Menú y Platos</h2>
+            </div>
+
+            <div id="vista-proveedores" style="display: none; padding: 30px;">
+                <h2 style="color: #2c3e50; border-bottom: 2px solid #d32f2f; padding-bottom: 10px;">Directorio de Proveedores</h2>
+            </div>
+
+            <div id="vista-pagos" style="display: none; padding: 30px;">
+                <h2 style="color: #2c3e50; border-bottom: 2px solid #d32f2f; padding-bottom: 10px;">Configuración de Métodos de Pago</h2>
+            </div>
+
+            <div id="vista-inventario" style="display: none; padding: 30px;">
+                <h2 style="color: #2c3e50; border-bottom: 2px solid #d32f2f; padding-bottom: 10px;">Inventario de Insumos</h2>
+            </div>
+
+            <div id="vista-dashboard" style="display: none; padding: 30px;">
+                <h2 style="color: #2c3e50; border-bottom: 2px solid #d32f2f; padding-bottom: 10px;">Estadísticas Generales</h2>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
