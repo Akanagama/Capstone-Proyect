@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Admin | El Buen Sabor</title>
+    <title>Sistema Admin | Kial chicken</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="dashboard-container">
@@ -13,13 +15,13 @@
             <div class="logo">🍗 Admin Kial chicken</div>
             <ul class="menu">
                 <li><a href="#" onclick="cambiarVista('usuarios')" id="btn-usuarios">👥 Usuarios</a></li>
-                <li><a href="#" onclick="cambiarVista('ventas')" id="btn-ventas" class="active">🛒 Nueva Venta</a></li>
+                <li><a href="#" onclick="cambiarVista('ventas')" id="btn-ventas" class="active">🛒 Nueva Venta (POS)</a></li>
                 <li><a href="#" onclick="cambiarVista('clientes')" id="btn-clientes">📋 Registrar Cliente</a></li>
                 <li><a href="#" onclick="cambiarVista('menu')" id="btn-menu">🍽️ Menú / Platos</a></li>
                 <li><a href="#" onclick="cambiarVista('proveedores')" id="btn-proveedores">🚚 Proveedores</a></li>
                 <li><a href="#" onclick="cambiarVista('pagos')" id="btn-pagos">💳 Método Pago</a></li>
                 <li><a href="#" onclick="cambiarVista('inventario')" id="btn-inventario">📦 Inventario</a></li>
-                <li><a href="#" onclick="cambiarVista('dashboard')" id="btn-dashboard">📊 Dashboard</a></li>
+                <li><a href="#" onclick="cambiarVista('dashboard')" id="btn-dashboard">📊 Dashboard (IA/BI)</a></li>
                 
                 <li style="margin-top: 50px;"><a href="../Landing_Cliente/index.html">🚪 Cerrar Sesión</a></li>
             </ul>
@@ -27,131 +29,320 @@
 
         <main class="main-content">
             <header class="topbar">
-                <div class="date-time">Fecha Emisión: 25/04/2026</div>
-                <div class="user-info">Vendedor: Ñufo Ñufales</div>
+                <div class="date-time">Fecha Emisión: <span id="fecha-actual">09/05/2026</span></div>
+                <div class="user-info" id="info-usuario">Cargando...</div>
             </header>
 
-            <div id="vista-ventas" style="display: block;">
+            <div id="vista-ventas" style="display: block; padding: 20px 30px;">
                 <section class="sales-module">
-                    <div class="forms-container">
-                        <div class="form-box">
-                            <h3>Detalle del Pedido</h3>
-                            <div class="input-group">
-                                <label>Tipo Comprobante:</label>
-                                <select>
-                                    <option>Boleta Electrónica</option>
-                                    <option>Factura Electrónica</option>
-                                </select>
+                    <div style="display: flex; gap: 20px;">
+                        
+                        <div style="flex: 2;">
+                            <h3 style="margin-bottom: 15px; color: #2c3e50; border-bottom: 2px solid #ddd; padding-bottom: 10px;">Categorías y Platos</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px;">
+                                <button onclick="agregarAlPOS('1/4 de Pollo', 18.00)" style="padding: 20px 10px; background: white; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; border-top: 4px solid #f1c40f; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">🍗 1/4 Pollo<br><span style="color:#d32f2f">S/ 18.00</span></button>
+                                <button onclick="agregarAlPOS('1/2 Pollo', 32.00)" style="padding: 20px 10px; background: white; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; border-top: 4px solid #f1c40f; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">🍗 1/2 Pollo<br><span style="color:#d32f2f">S/ 32.00</span></button>
+                                <button onclick="agregarAlPOS('Pollo Entero', 65.00)" style="padding: 20px 10px; background: white; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; border-top: 4px solid #f1c40f; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">🍗 1 Pollo<br><span style="color:#d32f2f">S/ 65.00</span></button>
+                                <button onclick="agregarAlPOS('Chicha 1L', 12.00)" style="padding: 20px 10px; background: white; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; border-top: 4px solid #3498db; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">🥤 Chicha 1L<br><span style="color:#d32f2f">S/ 12.00</span></button>
+                                <button onclick="agregarAlPOS('Porción Papas', 10.00)" style="padding: 20px 10px; background: white; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; border-top: 4px solid #e67e22; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">🍟 Papas<br><span style="color:#d32f2f">S/ 10.00</span></button>
                             </div>
-                            <div class="input-group">
-                                <label>Método Pago:</label>
-                                <select>
-                                    <option>Efectivo</option>
-                                    <option>Yape / Plin</option>
-                                    <option>Tarjeta (POS)</option>
-                                </select>
+
+                            <div class="form-box" style="margin:0; padding: 15px;">
+                                <h3 style="margin-bottom: 10px; font-size: 14px;">Datos del Cliente (Opcional)</h3>
+                                <div style="display: flex; gap: 10px;">
+                                    <input type="text" placeholder="DNI / RUC" style="flex: 1; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                                    <input type="text" placeholder="Nombre" style="flex: 2; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-box">
-                            <h3>Info Cliente</h3>
-                            <div class="input-group row">
-                                <label>Documento:</label>
-                                <input type="text" placeholder="DNI / RUC">
-                                <button class="btn-search">🔍 Buscar</button>
+                        <div class="form-box" style="flex: 1; border-top: 6px solid #27ae60 !important; margin: 0; display: flex; flex-direction: column;">
+                            <h3 style="margin-bottom: 10px; text-align: center;">🛒 Cuenta Actual</h3>
+                            
+                            <div style="flex: 1; min-height: 250px; max-height: 300px; overflow-y: auto; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                                <table style="width: 100%; font-size: 13px;">
+                                    <tbody id="tabla-pos-body">
+                                        </tbody>
+                                </table>
                             </div>
-                            <div class="input-group">
-                                <label>Nombre/Razón:</label>
-                                <input type="text">
+                            
+                            <div class="totals" style="text-align: right;">
+                                <p style="display: flex; justify-content: space-between; color: #7f8c8d; font-size: 14px;">SubTotal: <span id="lbl-subtotal">S/ 0.00</span></p>
+                                <p style="display: flex; justify-content: space-between; color: #7f8c8d; font-size: 14px;">IGV (18%): <span id="lbl-igv">S/ 0.00</span></p>
+                                <h3 style="display: flex; justify-content: space-between; color: #d32f2f; font-size: 22px; margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; font-weight: bold;">Total: <span id="lbl-total">S/ 0.00</span></h3>
                             </div>
-                            <div class="input-group">
-                                <label>Dirección:</label>
-                                <input type="text">
-                            </div>
-                            <div class="input-group">
-                                <label>Email:</label>
-                                <input type="text">
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>PlatoID</th>
-                                    <th>Descripción</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio Unit.</th>
-                                    <th>SubTotal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>PL-001</td>
-                                    <td>1/4 de Pollo a la Brasa + Papas</td>
-                                    <td>2</td>
-                                    <td>S/ 18.00</td>
-                                    <td>S/ 36.00</td>
-                                </tr>
-                                <tr>
-                                    <td>BE-004</td>
-                                    <td>Jarra de Chicha Morada 1L</td>
-                                    <td>1</td>
-                                    <td>S/ 12.00</td>
-                                    <td>S/ 12.00</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            <select style="width: 100%; padding: 10px; margin-top: 15px; border-radius: 6px; border: 1px solid #ccc;">
+                                <option>Efectivo</option>
+                                <option>Yape / Plin</option>
+                                <option>Tarjeta (POS)</option>
+                            </select>
 
-                    <div class="actions-container">
-                        <div class="totals">
-                            <p>Total Gravada: <span>S/ 40.68</span></p>
-                            <p>IGV (18%): <span>S/ 7.32</span></p>
-                            <h3>Total a Pagar: <span>S/ 48.00</span></h3>
-                        </div>
-                        <div class="buttons">
-                            <button class="btn-pay">Pagar Venta</button>
-                            <button class="btn-secondary">Descargar PDF</button>
-                            <button class="btn-secondary">Descargar XML</button>
-                            <button class="btn-secondary">Consultar Estado Sunat</button>
+                            <button class="btn-pay" style="width: 100%; margin-top: 10px; font-size: 18px; padding: 15px;" onclick="cobrarVenta()">Cobrar Venta</button>
                         </div>
                     </div>
                 </section>
             </div>
 
             <div id="vista-usuarios" style="display: none; padding: 30px;">
-                <h2 style="color: #2c3e50; border-bottom: 2px solid #d32f2f; padding-bottom: 10px;">Gestión de Usuarios</h2>
+                <h2 style="text-align: center; font-weight: 700; margin-bottom: 30px;">Gestión de Usuarios</h2>
+                <div class="form-box" style="margin: 0 auto; max-width: 800px; border-top: 6px solid #8e44ad !important;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="margin: 0;">👥 Personal del Sistema</h3>
+                        <button class="btn-pay" style="background-color: #8e44ad; padding: 8px 15px; font-size: 14px; margin: 0;">➕ Nuevo Usuario</button>
+                    </div>
+                    <div class="table-container" style="border: none; padding: 0; box-shadow: none;">
+                        <table style="width: 100%;">
+                            <thead><tr style="background-color: #f8f9fa;"><th>Nombre</th><th>Usuario</th><th>Rol</th><th>Estado</th><th>Acción</th></tr></thead>
+                            <tbody>
+                                <tr><td>Ñufo Ñufales</td><td>admin</td><td><span style="background: #2c3e50; color: white; padding: 4px 10px; border-radius: 12px; font-size: 12px;">Administrador</span></td><td>🟢 Activo</td><td><button class="btn-secondary">✏️</button></td></tr>
+                                <tr><td>Arturo Bravo</td><td>arturo</td><td><span style="background: #16a085; color: white; padding: 4px 10px; border-radius: 12px; font-size: 12px;">Cajero</span></td><td>🟢 Activo</td><td><button class="btn-secondary">✏️</button></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
             <div id="vista-clientes" style="display: none; padding: 30px;">
-                <h2 style="color: #2c3e50; border-bottom: 2px solid #d32f2f; padding-bottom: 10px;">Registrar Nuevo Cliente</h2>
+                <h2>Registrar Nuevo Cliente</h2>
+                <div class="form-box">
+                    <div class="input-group" style="display: block;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Tipo Documento:</label>
+                        <select style="width: 100%;"><option>DNI</option><option>RUC</option></select>
+                    </div>
+                    <div class="input-group" style="display: block;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Número Doc:</label>
+                        <input type="text" placeholder="Ej. 72345678" style="width: 100%;">
+                    </div>
+                    <div class="input-group" style="display: block;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Nombre Completo:</label>
+                        <input type="text" style="width: 100%;">
+                    </div>
+                    <div class="input-group" style="display: block;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Dirección:</label>
+                        <input type="text" placeholder="Para delivery..." style="width: 100%;">
+                    </div>
+                    <button class="btn-pay" style="width: 100%;">💾 Guardar Cliente</button>
+                </div>
             </div>
 
             <div id="vista-menu" style="display: none; padding: 30px;">
-                <h2 style="color: #2c3e50; border-bottom: 2px solid #d32f2f; padding-bottom: 10px;">Catálogo de Menú y Platos</h2>
+                <h2 style="text-align: center; font-weight: 700; margin-bottom: 30px;">Catálogo de Menú y Platos</h2>
+                <div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
+                    <div class="form-box" style="flex: 1; max-width: 350px; border-top: 6px solid #f1c40f !important;">
+                        <h3>🍳 Nuevo Plato</h3>
+                        <div class="input-group" style="display: block;">
+                            <label>Nombre:</label>
+                            <input type="text" id="plato-nombre" style="width: 100%;">
+                        </div>
+                        <div class="input-group" style="display: block;">
+                            <label>Categoría:</label>
+                            <select id="plato-categoria" style="width: 100%;">
+                                <option>Pollos a la Brasa</option>
+                                <option>Parrillas</option>
+                                <option>Bebidas</option>
+                                <option>Guarniciones</option>
+                            </select>
+                        </div>
+                        <div class="input-group" style="display: block;">
+                            <label>Precio:</label>
+                            <input type="number" id="plato-precio" style="width: 100%;">
+                        </div>
+                        <button onclick="simularGuardarPlato()" class="btn-pay" style="width: 100%; background: #f1c40f; color: #333;">➕ Guardar</button>
+                    </div>
+                    <div class="table-container" style="flex: 2;">
+                        <table>
+                            <thead><tr><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Acción</th></tr></thead>
+                            <tbody id="tabla-platos-body">
+                                <tr><td>1/4 Pollo</td><td>Pollos a la Brasa</td><td>S/ 18.00</td><td><button class="btn-secondary" style="background:#e74c3c;">🗑️</button></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
             <div id="vista-proveedores" style="display: none; padding: 30px;">
-                <h2 style="color: #2c3e50; border-bottom: 2px solid #d32f2f; padding-bottom: 10px;">Directorio de Proveedores</h2>
+                <h2 style="text-align: center; font-weight: 700; margin-bottom: 30px;">Directorio de Proveedores</h2>
+                <div class="form-box" style="margin: 0 auto; max-width: 900px; border-top: 6px solid #d35400 !important;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="margin: 0;">🚚 Mis Proveedores</h3>
+                        <button class="btn-pay" style="background-color: #d35400; padding: 8px 15px; font-size: 14px; margin: 0;">➕ Agregar</button>
+                    </div>
+                    <div class="table-container" style="border: none; padding: 0; box-shadow: none;">
+                        <table style="width: 100%;">
+                            <thead><tr style="background-color: #f8f9fa;"><th>Empresa</th><th>Categoría</th><th>Contacto</th><th>Teléfono</th><th>Acción</th></tr></thead>
+                            <tbody>
+                                <tr><td>PollosÑufales</td><td>Carnes (Pollo)</td><td>Jesus Cardoza</td><td>923 435 655</td><td><button class="btn-secondary">📞 Contactar</button></td></tr>
+                                <tr><td>Ensalada Zana</td><td>Verduras (Papas)</td><td>Walker Leon</td><td>932 966 616</td><td><button class="btn-secondary">📞 Contactar</button></td></tr>
+                                <tr><td>Coca-Cola</td><td>Bebidas</td><td>Arturo Bravo</td><td>937 124 006</td><td><button class="btn-secondary">📞 Contactar</button></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
             <div id="vista-pagos" style="display: none; padding: 30px;">
-                <h2 style="color: #2c3e50; border-bottom: 2px solid #d32f2f; padding-bottom: 10px;">Configuración de Métodos de Pago</h2>
+                <h2 style="text-align: center; font-weight: 700; margin-bottom: 30px;">Métodos de Pago</h2>
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                    
+                    <div class="form-box" style="width: 250px; text-align: center; border-top: 6px solid #27ae60 !important; margin: 0;">
+                        <h1 style="font-size: 50px; margin-bottom: 10px;">💵</h1>
+                        <h3>Efectivo</h3>
+                        <p style="color: #7f8c8d; font-size: 13px; margin: 10px 0;">Pago en caja física</p>
+                        <button class="btn-pay" style="width: 100%; font-size: 14px; background: #2c3e50; margin: 0;">Configurar Caja</button>
+                    </div>
+
+                    <div class="form-box" style="width: 250px; text-align: center; border-top: 6px solid #8e44ad !important; margin: 0;">
+                        <h1 style="font-size: 50px; margin-bottom: 10px;">📱</h1>
+                        <h3>Billeteras Digitales</h3>
+                        <p style="color: #7f8c8d; font-size: 13px; margin: 10px 0;">Yape / Plin integrados</p>
+                        <button class="btn-pay" style="width: 100%; font-size: 14px; background: #2c3e50; margin: 0;">Configurar QR</button>
+                    </div>
+
+                    <div class="form-box" style="width: 250px; text-align: center; border-top: 6px solid #2980b9 !important; margin: 0;">
+                        <h1 style="font-size: 50px; margin-bottom: 10px;">💳</h1>
+                        <h3>Tarjeta (POS)</h3>
+                        <p style="color: #7f8c8d; font-size: 13px; margin: 10px 0;">Visa / Mastercard</p>
+                        <button class="btn-pay" style="width: 100%; font-size: 14px; background: #2c3e50; margin: 0;">Configurar Red</button>
+                    </div>
+                </div>
             </div>
 
             <div id="vista-inventario" style="display: none; padding: 30px;">
-                <h2 style="color: #2c3e50; border-bottom: 2px solid #d32f2f; padding-bottom: 10px;">Inventario de Insumos</h2>
+                <h2 style="text-align: center; font-weight: 700; margin-bottom: 30px;">Control de Inventario</h2>
+                <div class="form-box" style="margin: 0 auto; max-width: 900px; border-top: 6px solid #16a085 !important;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="margin: 0;">📦 Stock Actual en Almacén</h3>
+                        <button class="btn-pay" style="background-color: #16a085; padding: 8px 15px; font-size: 14px; margin: 0;">📥 Ingreso de Mercadería</button>
+                    </div>
+                    <div class="table-container" style="border: none; padding: 0; box-shadow: none;">
+                        <table style="width: 100%;">
+                            <thead><tr style="background-color: #f8f9fa;"><th>Insumo</th><th>Stock Actual</th><th>Unidad</th><th>Estado</th></tr></thead>
+                            <tbody>
+                                <tr><td>Pollos Enteros Macerados</td><td>45</td><td>Unidades</td><td><span style="color: #27ae60; font-weight: bold;">Óptimo</span></td></tr>
+                                <tr><td>Papas Amarillas</td><td>15</td><td>Sacos (50kg)</td><td><span style="color: #27ae60; font-weight: bold;">Óptimo</span></td></tr>
+                                <tr><td>Aceite Vegetal</td><td>2</td><td>Bidones (20L)</td><td><span style="color: #e74c3c; font-weight: bold;">⚠️ Stock Bajo</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
             <div id="vista-dashboard" style="display: none; padding: 30px;">
-                <h2 style="color: #2c3e50; border-bottom: 2px solid #d32f2f; padding-bottom: 10px;">Estadísticas Generales</h2>
+                <h2 style="margin-bottom: 20px;">Inteligencia de Negocios e IA Predictiva</h2>
+                <div style="display: flex; gap: 20px; margin-bottom: 30px;">
+                    <div class="form-box" style="flex: 1; text-align: center; border-left: 5px solid #1abc9c !important;">
+                        <h4>Ventas Hoy</h4><p style="font-size: 28px; font-weight: bold;">124</p>
+                    </div>
+                    <div class="form-box" style="flex: 1; text-align: center; border-left: 5px solid #e74c3c !important;">
+                        <h4>Mermas</h4><p style="font-size: 28px; font-weight: bold;">2.4%</p>
+                    </div>
+                    <div class="form-box" style="flex: 1; text-align: center; border-left: 5px solid #3498db !important;">
+                        <h4>Proyección Sab (IA)</h4><p style="font-size: 28px; font-weight: bold; color: #2980b9;">210</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div class="form-box" style="flex: 1; min-width: 400px;">
+                        <h4>📊 Ventas vs Mermas (BI)</h4><canvas id="chartBI"></canvas>
+                    </div>
+                    <div class="form-box" style="flex: 1; min-width: 400px;">
+                        <h4>🤖 Predicción de Demanda (IA)</h4><canvas id="chartIA"></canvas>
+                    </div>
+                </div>
             </div>
 
         </main>
     </div>
 
     <script src="dashboard.js"></script>
+
+    <script>
+        // --- 0. GESTIÓN DE SESIONES ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const rol = localStorage.getItem('rolUsuario');
+            
+            if (rol === 'arturo') {
+                document.getElementById('btn-usuarios').style.display = 'none';
+                document.getElementById('btn-proveedores').style.display = 'none';
+                document.getElementById('btn-pagos').style.display = 'none';
+                document.getElementById('btn-inventario').style.display = 'none';
+                document.getElementById('btn-dashboard').style.display = 'none';
+                document.getElementById('info-usuario').innerText = "Vendedor: Arturo";
+            } else if (rol === 'admin') {
+                document.getElementById('info-usuario').innerText = "Admin: Ñufo Ñufales";
+            } else {
+                alert("Debes iniciar sesión primero.");
+                window.location.href = "../Landing_Cliente/Login/login.html";
+            }
+
+            const hoy = new Date();
+            document.getElementById('fecha-actual').innerText = hoy.toLocaleDateString();
+
+            initCharts();
+        });
+
+        // --- 1. LÓGICA DEL POS ---
+        let totalGeneral = 0;
+
+        function agregarAlPOS(nombre, precio) {
+            totalGeneral += precio;
+            const fila = `<tr>
+                <td style="padding: 8px 5px; font-weight: 600;">${nombre}</td>
+                <td style="padding: 8px 5px; text-align: right;">S/ ${precio.toFixed(2)}</td>
+                <td style="padding: 8px 5px; text-align: center;"><button onclick="eliminarFila(this, ${precio})" style="background:#e74c3c; color:white; border:none; border-radius:4px; padding: 3px 8px; cursor:pointer;">X</button></td>
+            </tr>`;
+            document.getElementById('tabla-pos-body').innerHTML += fila;
+            actualizarTotales();
+        }
+
+        function eliminarFila(boton, precio) {
+            totalGeneral -= precio;
+            boton.closest('tr').remove();
+            actualizarTotales();
+        }
+
+        function actualizarTotales() {
+            const igv = totalGeneral * 0.18;
+            document.getElementById('lbl-subtotal').innerText = "S/ " + (totalGeneral - igv).toFixed(2);
+            document.getElementById('lbl-igv').innerText = "S/ " + igv.toFixed(2);
+            document.getElementById('lbl-total').innerText = "S/ " + totalGeneral.toFixed(2);
+        }
+
+        function cobrarVenta() {
+            if(totalGeneral === 0) {
+                alert("La cuenta está en 0. Agrega productos primero.");
+                return;
+            }
+            alert("✅ Venta de S/ " + totalGeneral.toFixed(2) + " cobrada con éxito. Imprimiendo comprobante...");
+            document.getElementById('tabla-pos-body').innerHTML = "";
+            totalGeneral = 0;
+            actualizarTotales();
+        }
+
+        // --- 2. SIMULACIÓN DE PLATOS ---
+        function simularGuardarPlato() {
+            const n = document.getElementById('plato-nombre').value;
+            const c = document.getElementById('plato-categoria').value;
+            const p = document.getElementById('plato-precio').value;
+            if(!n || !p) return alert("Completa los datos del plato");
+            const fila = `<tr><td>${n}</td><td>${c}</td><td>S/ ${parseFloat(p).toFixed(2)}</td><td><button class="btn-secondary" style="background:#e74c3c;">🗑️</button></td></tr>`;
+            document.getElementById('tabla-platos-body').innerHTML += fila;
+            alert("✅ Plato guardado visualmente");
+            document.getElementById('plato-nombre').value = "";
+            document.getElementById('plato-precio').value = "";
+        }
+
+        // --- 3. GRÁFICOS (BI e IA) ---
+        function initCharts() {
+            new Chart(document.getElementById('chartBI'), {
+                type: 'bar',
+                data: { labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], datasets: [{ label: 'Ventas', data: [45, 50, 48, 60, 120, 180, 190], backgroundColor: '#f1c40f' }, { label: 'Mermas', data: [5, 4, 6, 2, 8, 3, 2], backgroundColor: '#e74c3c' }]}
+            });
+            new Chart(document.getElementById('chartIA'), {
+                type: 'line',
+                data: { labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], datasets: [{ label: 'Predicción IA', data: [42, 48, 55, 65, 130, 210, 225], borderColor: '#2980b9', tension: 0.4, fill: true, backgroundColor: 'rgba(41, 128, 185, 0.1)' }]}
+            });
+        }
+    </script>
 </body>
 </html>
