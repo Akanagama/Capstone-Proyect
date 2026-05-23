@@ -152,10 +152,9 @@
                     </div>
                     <div class="table-container" style="flex: 2;">
                         <table>
-                            <thead><tr><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Acción</th></tr></thead>
+                            <thead><tr><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Estado</th></tr></thead>
                             <tbody id="tabla-platos-body">
-                                <tr><td>1/4 Pollo</td><td>Pollos a la Brasa</td><td>S/ 18.00</td><td><button class="btn-secondary" style="background:#e74c3c;">🗑️</button></td></tr>
-                            </tbody>
+                                </tbody>
                         </table>
                     </div>
                 </div>
@@ -172,9 +171,9 @@
                         <table style="width: 100%;">
                             <thead><tr style="background-color: #f8f9fa;"><th>Empresa</th><th>Categoría</th><th>Contacto</th><th>Teléfono</th><th>Acción</th></tr></thead>
                             <tbody>
-                                <tr><td>PollosÑufales</td><td>Carnes (Pollo)</td><td>Jesus Cardoza</td><td>923 435 655</td><td><button class="btn-secondary">📞 Contactar</button></td></tr>
-                                <tr><td>Ensalada Zana</td><td>Verduras (Papas)</td><td>Walker Leon</td><td>932 966 616</td><td><button class="btn-secondary">📞 Contactar</button></td></tr>
-                                <tr><td>Coca-Cola</td><td>Bebidas</td><td>Arturo Bravo</td><td>937 124 006</td><td><button class="btn-secondary">📞 Contactar</button></td></tr>
+                                <tr><td>Avícola El Buen Pollo</td><td>Carnes (Pollo)</td><td>Carlos Ruiz</td><td>987654321</td><td><button class="btn-secondary">📞 Contactar</button></td></tr>
+                                <tr><td>Agro Distribuciones</td><td>Verduras (Papas)</td><td>María López</td><td>912345678</td><td><button class="btn-secondary">📞 Contactar</button></td></tr>
+                                <tr><td>Gaseosas S.A.</td><td>Bebidas</td><td>Juan Pérez</td><td>999888777</td><td><button class="btn-secondary">📞 Contactar</button></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -279,6 +278,9 @@
             document.getElementById('fecha-actual').innerText = hoy.toLocaleDateString();
 
             initCharts();
+            
+            // Llamar a la base de datos al iniciar
+            cargarPlatosDesdeBD();
         });
 
         // --- 1. LÓGICA DEL POS ---
@@ -319,13 +321,18 @@
             actualizarTotales();
         }
 
-        // --- 2. SIMULACIÓN DE PLATOS ---
+        // --- 2. SIMULACIÓN DE PLATOS (VISUAL) ---
         function simularGuardarPlato() {
             const n = document.getElementById('plato-nombre').value;
             const c = document.getElementById('plato-categoria').value;
             const p = document.getElementById('plato-precio').value;
             if(!n || !p) return alert("Completa los datos del plato");
-            const fila = `<tr><td>${n}</td><td>${c}</td><td>S/ ${parseFloat(p).toFixed(2)}</td><td><button class="btn-secondary" style="background:#e74c3c;">🗑️</button></td></tr>`;
+            const fila = `<tr>
+                <td style="font-weight: bold;">${n}</td>
+                <td>${c}</td>
+                <td>S/ ${parseFloat(p).toFixed(2)}</td>
+                <td><span style="color: #27ae60; font-weight: bold;">Activo (Simulado)</span></td>
+            </tr>`;
             document.getElementById('tabla-platos-body').innerHTML += fila;
             alert("✅ Plato guardado visualmente");
             document.getElementById('plato-nombre').value = "";
@@ -342,6 +349,31 @@
                 type: 'line',
                 data: { labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], datasets: [{ label: 'Predicción IA', data: [42, 48, 55, 65, 130, 210, 225], borderColor: '#2980b9', tension: 0.4, fill: true, backgroundColor: 'rgba(41, 128, 185, 0.1)' }]}
             });
+        }
+        
+        // --- 4. CONEXIÓN REAL A LA BASE DE DATOS (BACKEND) ---
+        async function cargarPlatosDesdeBD() {
+            try {
+                // Hacemos la petición a tu servidor Python
+                const respuesta = await fetch('http://127.0.0.1:8000/api/platos');
+                const platos = await respuesta.json();
+
+                const tbody = document.getElementById('tabla-platos-body');
+                tbody.innerHTML = ''; // Borramos cualquier plato falso de prueba
+
+                // Llenamos la tabla con los datos reales del SQL Server
+                platos.forEach(plato => {
+                    const fila = `<tr>
+                        <td style="font-weight: bold;">${plato.nombre}</td>
+                        <td>${plato.categoria}</td>
+                        <td>S/ ${plato.precio.toFixed(2)}</td>
+                        <td><span style="color: #27ae60; font-weight: bold;">${plato.estado}</span></td>
+                    </tr>`;
+                    tbody.innerHTML += fila;
+                });
+            } catch (error) {
+                console.error("Error conectando al Backend:", error);
+            }
         }
     </script>
 </body>
