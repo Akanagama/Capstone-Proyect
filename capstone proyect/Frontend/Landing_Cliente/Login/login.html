@@ -3,28 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Kial chicken</title>
+    <title>Iniciar Sesión | Kial Chicken</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="login.css">
 </head>
 <body>
 
-    <div class="login-card">
-        <h2>🍗 Ingreso al Sistema</h2>
-        <div class="input-group">
-            <label>Usuario:</label>
-            <input type="text" id="user" placeholder="Escribe usuario'">
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Kial Chicken</h1>
+            <p>Sistema Integral de Gestión (POS & BI)</p>
         </div>
-        <div class="input-group">
-            <label>Contraseña:</label>
-            <input type="password" id="pass" placeholder="Escribe la contraseña">
+
+        <!-- Al presionar el botón se dispara la función de login.js -->
+        <form id="form-login">
+            <div class="input-group">
+                <label for="input-usuario">Usuario de Acceso:</label>
+                <input type="text" id="input-usuario" placeholder="Ej. admin o arturo" required autocomplete="username">
+            </div>
+
+            <div class="input-group">
+                <label for="input-password">Contraseña:</label>
+                <input type="password" id="input-password" placeholder="••••••••" required autocomplete="current-password">
+            </div>
+
+            <button type="submit" class="btn-ingresar">🚀 Ingresar al Sistema</button>
+        </form>
+
+        <div class="login-footer">
+            <!-- Ruta relativa corregida según tu árbol para regresar a la Landing -->
+            <a href="../index.html">⬅️ Volver a la Landing de Clientes</a>
         </div>
-        
-        <button class="btn-login" onclick="iniciarSesion()">Ingresar</button>
-        
-        <p class="demo-text">Para la expo: Usa <b>admin</b> o <b>arturo</b>. Clave: <b>123</b></p>
     </div>
 
+    <!-- Vinculación nativa con tu archivo JS de la misma carpeta -->
     <script src="login.js"></script>
-
 </body>
 </html>

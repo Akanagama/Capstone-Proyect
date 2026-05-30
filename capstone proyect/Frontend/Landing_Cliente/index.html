@@ -3,138 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Admin | Kial chicken</title>
+    <title>Kial Chicken | Pollería Delivery</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="dashboard.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
-    <div class="dashboard-container">
-        
-        <aside class="sidebar">
-            <div class="logo">🍗 Admin Kial chicken</div>
-            <ul class="menu">
-                <li><a href="#" onclick="cambiarVista('usuarios')" id="btn-usuarios">👥 Usuarios</a></li>
-                <li><a href="#" onclick="cambiarVista('ventas')" id="btn-ventas" class="active">🛒 Nueva Venta (POS)</a></li>
-                <li><a href="#" onclick="cambiarVista('clientes')" id="btn-clientes">📋 Registrar Cliente</a></li>
-                <li><a href="#" onclick="cambiarVista('menu')" id="btn-menu">🍽️ Menú / Platos</a></li>
-                <li><a href="#" onclick="cambiarVista('proveedores')" id="btn-proveedores">🚚 Proveedores</a></li>
-                <li><a href="#" onclick="cambiarVista('pagos')" id="btn-pagos">💳 Método Pago</a></li>
-                <li><a href="#" onclick="cambiarVista('inventario')" id="btn-inventario">📦 Inventario</a></li>
-                <li><a href="#" onclick="cambiarVista('dashboard')" id="btn-dashboard">📊 Dashboard (IA/BI)</a></li>
-                <li style="margin-top: 50px;"><a href="../Landing_Cliente/index.html">🚪 Cerrar Sesión</a></li>
-            </ul>
-        </aside>
 
-        <main class="main-content">
-            <header class="topbar">
-                <div class="date-time">Fecha Emisión: <span id="fecha-actual"></span></div>
-                <div class="user-info" id="info-usuario">Cargando...</div>
-            </header>
+    <nav>
+        <h1>Kial chicken</h1>
+        <div class="nav-links">
+            <a href="#carta" class="link-menu">Nuestra Carta</a>
+            <a href="#" onclick="abrirMapaGeolocalizacion(event)" class="link-menu">Ubicación</a>
+            <a href="Login/login.html" class="btn-login">Login</a>
+        </div>
+    </nav>
 
-            <div id="vista-ventas" style="display: block; padding: 20px 30px;">
-                <section class="sales-module">
-                    <div style="display: flex; gap: 20px;">
-                        <div style="flex: 2;">
-                            <h3 style="margin-bottom: 15px; color: #2c3e50; border-bottom: 2px solid #ddd; padding-bottom: 10px;">Categorías y Platos</h3>
-                            <div id="contenedor-botones-pos" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px;">
-                                </div>
-                        </div>
+    <header class="hero">
+        <h2>El auténtico sabor a la brasa</h2>
+        <p>Disfruta del mejor pollo crocante y jugoso directo a tu mesa en Puerto Malabrigo.</p>
+        <a href="#carta" class="btn-ver-menu">Ver menú</a>
+    </header>
 
-                        <div class="form-box" style="flex: 1; border-top: 6px solid #27ae60 !important; margin: 0; display: flex; flex-direction: column;">
-                            <h3 style="margin-bottom: 10px; text-align: center;">🛒 Cuenta Actual</h3>
-                            <div style="flex: 1; min-height: 250px; max-height: 300px; overflow-y: auto; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
-                                <table style="width: 100%; font-size: 13px;"><tbody id="tabla-pos-body"></tbody></table>
-                            </div>
-                            <div class="totals" style="text-align: right;">
-                                <h3 style="display: flex; justify-content: space-between; color: #d32f2f; font-size: 22px;">Total: <span id="lbl-total">S/ 0.00</span></h3>
-                            </div>
-                            <button class="btn-pay" style="width: 100%; margin-top: 10px; padding: 15px;" onclick="cobrarVenta()">Cobrar Venta</button>
-                        </div>
-                    </div>
-                </section>
-            </div>
+    <section class="menu-preview" id="carta">
+        <h3>Menu Kial Chicken</h3>
+        <p class="subtitle">Pide directo por WhatsApp y te lo llevamos volando en delivery</p>
 
-            <div id="vista-usuarios" style="display: none; padding: 30px;">
-                <h2 style="text-align: center; margin-bottom: 30px;">Gestión de Usuarios</h2>
-                <div class="form-box" style="margin: 0 auto; max-width: 800px; border-top: 6px solid #8e44ad !important;">
-                    <div style="display: flex; gap: 10px; margin-bottom: 20px; background: #f8f9fa; padding: 15px;">
-                        <input type="text" id="usu-nombre" placeholder="Nombre completo" style="flex:1; padding: 8px;">
-                        <input type="text" id="usu-user" placeholder="Usuario" style="flex:1; padding: 8px;">
-                        <input type="password" id="usu-pass" placeholder="Clave" style="flex:1; padding: 8px;">
-                        <select id="usu-rol" style="flex:1; padding: 8px;"><option value="cajero">Cajero</option><option value="admin">Administrador</option></select>
-                        <button class="btn-pay" style="background-color: #8e44ad; padding: 8px 15px; margin: 0;" onclick="guardarUsuarioBD()">➕ Guardar</button>
-                    </div>
+        <div class="grid-platos">
+            <div class="plato-card">
+                <div>
+                    <h4>1/4 de Pollo</h4>
+                    <p>Con papas fritas crujientes, ensalada fresca del día y todas nuestras cremas caseras.</p>
+                </div>
+                <div>
+                    <p class="precio">S/ 18.00</p>
+                    <a href="https://wa.me/51937124006?text=Hola%20Kial%20Chicken,%20deseo%20ordenar%201/4%20de%20Pollo" target="_blank" class="btn-wsp">Pedir por WhatsApp</a>
                 </div>
             </div>
 
-            <div id="vista-menu" style="display: none; padding: 30px;">
-                <h2 style="text-align: center; margin-bottom: 30px;">Catálogo de Menú</h2>
-                <div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
-                    <div class="form-box" style="flex: 1; max-width: 350px; border-top: 6px solid #f1c40f !important;">
-                        <h3>🍳 Nuevo Plato</h3>
-                        <input type="text" id="plato-nombre" placeholder="Nombre" style="width: 100%; margin-bottom:10px;">
-                        <select id="plato-categoria" style="width: 100%; margin-bottom:10px;"><option>Pollos a la Brasa</option><option>Parrillas</option><option>Bebidas</option></select>
-                        <input type="number" id="plato-precio" placeholder="Precio" style="width: 100%; margin-bottom:10px;">
-                        <button onclick="simularGuardarPlato()" class="btn-pay" style="width: 100%; background: #f1c40f;">➕ Guardar</button>
-                    </div>
-                    <div class="table-container" style="flex: 2;">
-                        <table><thead><tr><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Estado</th></tr></thead><tbody id="tabla-platos-body"></tbody></table>
-                    </div>
+            <div class="plato-card">
+                <div>
+                    <h4>1/2 Pollo</h4>
+                    <p>Ideal para compartir. Servido con una generosa porción de papas y ensalada clásica.</p>
+                </div>
+                <div>
+                    <p class="precio">S/ 32.00</p>
+                    <a href="https://wa.me/51937124006?text=Hola%20Kial%20Chicken,%20deseo%20ordenar%201/2%20Pollo" target="_blank" class="btn-wsp">Pedir por WhatsApp</a>
                 </div>
             </div>
-            
-            </main>
+
+            <div class="plato-card">
+                <div>
+                    <h4>Pollo Entero</h4>
+                    <p>¡El banquete familiar! Un pollo entero dorado a la perfección, papas familiares y ensalada.</p>
+                </div>
+                <div>
+                    <p class="precio">S/ 65.00</p>
+                    <a href="https://wa.me/51937124006?text=Hola%20Kial%20Chicken,%20deseo%20ordenar%20un%20Pollo%20Entero" target="_blank" class="btn-wsp">Pedir por WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="modal-geolocalizacion" class="modal-mapa">
+        <div class="modal-contenido">
+            <span class="cerrar-modal" onclick="cerrarMapaGeolocalizacion()">&times;</span>
+            <h3>📍 Nuestra Ubicación Exacta</h3>
+            <p style="color: #666; font-size: 13px; margin-bottom: 10px;">Visítanos en Puerto Malabrigo. ¡El mejor sabor a la brasa cerca al mar!</p>
+            <div id="contenedor-mapa-api"></div>
+        </div>
     </div>
 
-    <script src="dashboard.js"></script>
+    <footer id="ubicacion">
+        <p>© 2026 Kial Chicken - Puerto Malabrigo, La Libertad, Perú. Desarrollado para Proyecto Capstone.</p>
+    </footer>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const rol = localStorage.getItem('rolUsuario');
-            if (rol !== 'admin' && rol !== 'arturo') {
-                alert("Debes iniciar sesión primero.");
-                window.location.href = "../Landing_Cliente/Login/login.html";
+        let mapaInstancia = null;
+
+        function abrirMapaGeolocalizacion(event) {
+            event.preventDefault();
+            const modal = document.getElementById('modal-geolocalizacion');
+            modal.style.display = 'flex';
+
+            const latitudMalabrigo = -7.6933; 
+            const longitudMalabrigo = -79.4354;
+
+            if (mapaInstancia === null) {
+                mapaInstancia = L.map('contenedor-mapa-api').setView([latitudMalabrigo, longitudMalabrigo], 16);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(mapaInstancia);
+
+                const marcador = L.marker([latitudMalabrigo, longitudMalabrigo]).addTo(mapaInstancia);
+                marcador.bindPopup("<b>🍗 Kial Chicken</b><br>¡Te esperamos con el mejor Pollo a la Brasa!").openPopup();
+            } else {
+                setTimeout(() => { mapaInstancia.invalidateSize(); }, 200);
             }
-            document.getElementById('fecha-actual').innerText = new Date().toLocaleDateString();
-            cargarPlatosDesdeBD();
-        });
-
-        // Cargar Platos y Renderizar Botones POS
-        async function cargarPlatosDesdeBD() {
-            const respuesta = await fetch('http://127.0.0.1:8000/api/platos');
-            const platos = await respuesta.json();
-            
-            // Llenar tabla Menú
-            const tbody = document.getElementById('tabla-platos-body');
-            tbody.innerHTML = '';
-            platos.forEach(p => tbody.innerHTML += `<tr><td>${p.nombre}</td><td>${p.categoria}</td><td>S/ ${p.precio.toFixed(2)}</td><td>${p.estado}</td></tr>`);
-            
-            // Llenar botones POS
-            const contenedor = document.getElementById('contenedor-botones-pos');
-            contenedor.innerHTML = '';
-            platos.forEach(p => {
-                contenedor.innerHTML += `<button onclick="agregarAlPOS('${p.nombre}', ${p.precio})" style="padding: 20px 10px; background: white; border-top: 4px solid #f1c40f; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">${p.nombre}<br><b>S/ ${p.precio.toFixed(2)}</b></button>`;
-            });
         }
 
-        async function simularGuardarPlato() {
-            const data = { 
-                nombre: document.getElementById('plato-nombre').value, 
-                categoria: document.getElementById('plato-categoria').value, 
-                precio: parseFloat(document.getElementById('plato-precio').value) 
-            };
-            await fetch('http://127.0.0.1:8000/api/platos', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) });
-            alert("✅ Guardado");
-            cargarPlatosDesdeBD();
+        function cerrarMapaGeolocalizacion() {
+            document.getElementById('modal-geolocalizacion').style.display = 'none';
         }
 
-        function agregarAlPOS(nombre, precio) {
-            document.getElementById('tabla-pos-body').innerHTML += `<tr><td>${nombre}</td><td>S/ ${precio.toFixed(2)}</td></tr>`;
-            let total = parseFloat(document.getElementById('lbl-total').innerText.replace('S/ ','')) + precio;
-            document.getElementById('lbl-total').innerText = 'S/ ' + total.toFixed(2);
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal-geolocalizacion');
+            if (event.target == modal) { modal.style.display = 'none'; }
         }
-
-        function cobrarVenta() { alert("✅ Venta procesada"); location.reload(); }
     </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Admin | Kial chicken</title>
+    <title>Sistema Admin | Kial Chicken</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -12,7 +12,7 @@
     <div class="dashboard-container">
         
         <aside class="sidebar">
-            <div class="logo">🍗 Admin Kial chicken</div>
+            <div class="logo">🍗 Admin Kial Chicken</div>
             <ul class="menu">
                 <li><a href="#" onclick="cambiarVista('usuarios')" id="btn-usuarios">👥 Usuarios</a></li>
                 <li><a href="#" onclick="cambiarVista('ventas')" id="btn-ventas" class="active">🛒 Nueva Venta (POS)</a></li>
@@ -22,63 +22,49 @@
                 <li><a href="#" onclick="cambiarVista('pagos')" id="btn-pagos">💳 Método Pago</a></li>
                 <li><a href="#" onclick="cambiarVista('inventario')" id="btn-inventario">📦 Inventario</a></li>
                 <li><a href="#" onclick="cambiarVista('dashboard')" id="btn-dashboard">📊 Dashboard (IA/BI)</a></li>
-                
-                <li style="margin-top: 50px;"><a href="../Landing_Cliente/index.html">🚪 Cerrar Sesión</a></li>
+                <li style="margin-top: 50px;"><a href="#" onclick="cerrarSesionSeguro()">🚪 Cerrar Sesión</a></li>
             </ul>
         </aside>
 
         <main class="main-content">
             <header class="topbar">
-                <div class="date-time">Fecha Emisión: <span id="fecha-actual">09/05/2026</span></div>
+                <div class="date-time">Fecha Emisión: <span id="fecha-actual">Cargando...</span></div>
                 <div class="user-info" id="info-usuario">Cargando...</div>
             </header>
 
             <div id="vista-ventas" style="display: block; padding: 20px 30px;">
                 <section class="sales-module">
                     <div style="display: flex; gap: 20px;">
-                        
                         <div style="flex: 2;">
                             <h3 style="margin-bottom: 15px; color: #2c3e50; border-bottom: 2px solid #ddd; padding-bottom: 10px;">Categorías y Platos</h3>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px;">
-                                <button onclick="agregarAlPOS('1/4 de Pollo', 18.00)" style="padding: 20px 10px; background: white; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; border-top: 4px solid #f1c40f; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">🍗 1/4 Pollo<br><span style="color:#d32f2f">S/ 18.00</span></button>
-                                <button onclick="agregarAlPOS('1/2 Pollo', 32.00)" style="padding: 20px 10px; background: white; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; border-top: 4px solid #f1c40f; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">🍗 1/2 Pollo<br><span style="color:#d32f2f">S/ 32.00</span></button>
-                                <button onclick="agregarAlPOS('Pollo Entero', 65.00)" style="padding: 20px 10px; background: white; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; border-top: 4px solid #f1c40f; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">🍗 1 Pollo<br><span style="color:#d32f2f">S/ 65.00</span></button>
-                                <button onclick="agregarAlPOS('Chicha 1L', 12.00)" style="padding: 20px 10px; background: white; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; border-top: 4px solid #3498db; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">🥤 Chicha 1L<br><span style="color:#d32f2f">S/ 12.00</span></button>
-                                <button onclick="agregarAlPOS('Porción Papas', 10.00)" style="padding: 20px 10px; background: white; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; border-top: 4px solid #e67e22; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">🍟 Papas<br><span style="color:#d32f2f">S/ 10.00</span></button>
-                            </div>
-
-                            <div class="form-box" style="margin:0; padding: 15px;">
-                                <h3 style="margin-bottom: 10px; font-size: 14px;">Datos del Cliente (Opcional)</h3>
-                                <div style="display: flex; gap: 10px;">
-                                    <input type="text" placeholder="DNI / RUC" style="flex: 1; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
-                                    <input type="text" placeholder="Nombre" style="flex: 2; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
-                                </div>
-                            </div>
+                            <div id="contenedor-botones-pos" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px;"></div>
                         </div>
 
                         <div class="form-box" style="flex: 1; border-top: 6px solid #27ae60 !important; margin: 0; display: flex; flex-direction: column;">
                             <h3 style="margin-bottom: 10px; text-align: center;">🛒 Cuenta Actual</h3>
-                            
                             <div style="flex: 1; min-height: 250px; max-height: 300px; overflow-y: auto; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
-                                <table style="width: 100%; font-size: 13px;">
-                                    <tbody id="tabla-pos-body">
-                                        </tbody>
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr style="background-color: #f8f9fa;">
+                                            <th style="padding: 8px; font-size: 13px;">Descripción</th>
+                                            <th style="padding: 8px; font-size: 13px; text-align: center;">Cant.</th>
+                                            <th style="padding: 8px; font-size: 13px; text-align: right;">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabla-pos-body"></tbody>
                                 </table>
                             </div>
-                            
-                            <div class="totals" style="text-align: right;">
-                                <p style="display: flex; justify-content: space-between; color: #7f8c8d; font-size: 14px;">SubTotal: <span id="lbl-subtotal">S/ 0.00</span></p>
-                                <p style="display: flex; justify-content: space-between; color: #7f8c8d; font-size: 14px;">IGV (18%): <span id="lbl-igv">S/ 0.00</span></p>
-                                <h3 style="display: flex; justify-content: space-between; color: #d32f2f; font-size: 22px; margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; font-weight: bold;">Total: <span id="lbl-total">S/ 0.00</span></h3>
+                            <div class="totals">
+                                <p>SubTotal: <span id="lbl-subtotal">S/ 0.00</span></p>
+                                <p>IGV (18%): <span id="lbl-igv">S/ 0.00</span></p>
+                                <h3>Total: <span id="lbl-total">S/ 0.00</span></h3>
                             </div>
-
                             <select style="width: 100%; padding: 10px; margin-top: 15px; border-radius: 6px; border: 1px solid #ccc;">
-                                <option>Efectivo</option>
-                                <option>Yape / Plin</option>
-                                <option>Tarjeta (POS)</option>
+                                <option value="Efectivo">💵 Efectivo</option>
+                                <option value="Yape/Plin">📱 Yape / Plin</option>
+                                <option value="Tarjeta">💳 Tarjeta (POS)</option>
                             </select>
-
-                            <button class="btn-pay" style="width: 100%; margin-top: 10px; font-size: 18px; padding: 15px;" onclick="cobrarVenta()">Cobrar Venta</button>
+                            <button class="btn-pay" style="width: 100%; margin-top: 15px; font-size: 18px; padding: 15px;" onclick="cobrarVenta()">Cobrar Venta</button>
                         </div>
                     </div>
                 </section>
@@ -86,75 +72,129 @@
 
             <div id="vista-usuarios" style="display: none; padding: 30px;">
                 <h2 style="text-align: center; font-weight: 700; margin-bottom: 30px;">Gestión de Usuarios</h2>
-                <div class="form-box" style="margin: 0 auto; max-width: 800px; border-top: 6px solid #8e44ad !important;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h3 style="margin: 0;">👥 Personal del Sistema</h3>
-                        <button class="btn-pay" style="background-color: #8e44ad; padding: 8px 15px; font-size: 14px; margin: 0;">➕ Nuevo Usuario</button>
+                <div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+                    <div class="form-box" style="flex: 1; max-width: 350px; border-top: 6px solid #8e44ad !important; margin: 0;">
+                        <h3>👥 Nuevo Personal</h3>
+                        <div class="input-group" style="display: block; margin-top: 15px;">
+                            <label style="display:block; margin-bottom:5px;">Nombre Completo:</label>
+                            <input type="text" id="usu-nombre" style="width: 100%;">
+                        </div>
+                        <div class="input-group" style="display: block;">
+                            <label style="display:block; margin-bottom:5px;">Usuario (Username):</label>
+                            <input type="text" id="usu-user" style="width: 100%;">
+                        </div>
+                        <div class="input-group" style="display: block;">
+                            <label style="display:block; margin-bottom:5px;">Clave de Acceso:</label>
+                            <input type="password" id="usu-pass" style="width: 100%;">
+                        </div>
+                        <div class="input-group" style="display: block;">
+                            <label style="display:block; margin-bottom:5px;">Rol del Sistema:</label>
+                            <select id="usu-rol" style="width: 100%;">
+                                <option value="cajero">Cajero / Vendedor</option>
+                                <option value="admin">Administrador</option>
+                            </select>
+                        </div>
+                        <button class="btn-pay" style="width: 100%; background-color: #8e44ad; margin-top: 10px;" onclick="guardarUsuarioBD()">➕ Guardar Personal</button>
                     </div>
-                    <div class="table-container" style="border: none; padding: 0; box-shadow: none;">
-                        <table style="width: 100%;">
-                            <thead><tr style="background-color: #f8f9fa;"><th>Nombre</th><th>Usuario</th><th>Rol</th><th>Estado</th><th>Acción</th></tr></thead>
-                            <tbody>
-                                <tr><td>Ñufo Ñufales</td><td>admin</td><td><span style="background: #2c3e50; color: white; padding: 4px 10px; border-radius: 12px; font-size: 12px;">Administrador</span></td><td>🟢 Activo</td><td><button class="btn-secondary">✏️</button></td></tr>
-                                <tr><td>Arturo Bravo</td><td>arturo</td><td><span style="background: #16a085; color: white; padding: 4px 10px; border-radius: 12px; font-size: 12px;">Cajero</span></td><td>🟢 Activo</td><td><button class="btn-secondary">✏️</button></td></tr>
-                            </tbody>
+                    <div class="table-container" style="flex: 2; min-width: 450px;">
+                        <h3 style="margin-bottom: 15px; color: #2c3e50;">👥 Personal Registrado en el Sistema</h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background-color: #f8f9fa;">
+                                    <th style="padding: 12px; text-align: left;">Nombre Completo</th>
+                                    <th style="padding: 12px; text-align: left;">Username</th>
+                                    <th style="padding: 12px; text-align: center;">Rol</th>
+                                    <th style="padding: 12px; text-align: center;">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-usuarios-body"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
             <div id="vista-clientes" style="display: none; padding: 30px;">
-                <h2>Registrar Nuevo Cliente</h2>
-                <div class="form-box">
-                    <div class="input-group" style="display: block;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Tipo Documento:</label>
-                        <select style="width: 100%;"><option>DNI</option><option>RUC</option></select>
+                <h2 style="text-align: center; font-weight: 700; margin-bottom: 30px;">Directorio de Clientes</h2>
+                <div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+                    
+                    <div class="form-box" style="flex: 1; max-width: 350px; border-top: 6px solid #d32f2f !important; margin:0;">
+                        <h3 id="lbl-titulo-cliente">📋 Registrar Nuevo Cliente</h3>
+                        <input type="hidden" id="cliente-id-hidden" value="">
+
+                        <div class="input-group" style="display: block; margin-top: 15px;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Tipo Documento:</label>
+                            <select id="cliente-tipo" style="width: 100%;"><option value="DNI">DNI</option><option value="RUC">RUC</option></select>
+                        </div>
+                        <div class="input-group" style="display: block;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Número Doc:</label>
+                            <input type="text" id="cliente-doc" placeholder="Ej. 72345678" style="width: 100%;">
+                        </div>
+                        <div class="input-group" style="display: block;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Nombre Completo:</label>
+                            <input type="text" id="cliente-nombre" style="width: 100%;">
+                        </div>
+                        <div class="input-group" style="display: block;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Dirección:</label>
+                            <input type="text" id="cliente-direccion" placeholder="Para delivery..." style="width: 100%;">
+                        </div>
+                        
+                        <button id="btn-cliente-guardar" class="btn-pay" style="width: 100%; background: #d32f2f;" onclick="guardarClienteBD()">💾 Guardar Cliente</button>
+                        <button id="btn-cliente-cancelar" class="btn-secondary" style="width: 100%; margin-top: 8px; display: none;" onclick="limpiarFormularioCliente()">Cancelar Modificación</button>
                     </div>
-                    <div class="input-group" style="display: block;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Número Doc:</label>
-                        <input type="text" placeholder="Ej. 72345678" style="width: 100%;">
+
+                    <div class="table-container" style="flex: 2; min-width: 450px;">
+                        <h3 style="margin-bottom: 15px; color: #2c3e50;">👥 Base de Datos de Clientes</h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background-color: #f8f9fa;">
+                                    <th style="padding: 12px; text-align: left;">Documento</th>
+                                    <th style="padding: 12px; text-align: left;">Nombre Completo</th>
+                                    <th style="padding: 12px; text-align: left;">Dirección</th>
+                                    <th style="padding: 12px; text-align: center;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-clientes-body"></tbody>
+                        </table>
                     </div>
-                    <div class="input-group" style="display: block;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Nombre Completo:</label>
-                        <input type="text" style="width: 100%;">
-                    </div>
-                    <div class="input-group" style="display: block;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Dirección:</label>
-                        <input type="text" placeholder="Para delivery..." style="width: 100%;">
-                    </div>
-                    <button class="btn-pay" style="width: 100%;">💾 Guardar Cliente</button>
                 </div>
             </div>
 
             <div id="vista-menu" style="display: none; padding: 30px;">
                 <h2 style="text-align: center; font-weight: 700; margin-bottom: 30px;">Catálogo de Menú y Platos</h2>
-                <div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
-                    <div class="form-box" style="flex: 1; max-width: 350px; border-top: 6px solid #f1c40f !important;">
+                <div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+                    <div class="form-box" id="card-formulario-plato" style="flex: 1; max-width: 350px; border-top: 6px solid #f1c40f !important; margin: 0;">
                         <h3>🍳 Nuevo Plato</h3>
-                        <div class="input-group" style="display: block;">
-                            <label>Nombre:</label>
+                        <div class="input-group" style="display: block; margin-top: 15px;">
+                            <label>Nombre del Plato/Bebida:</label>
                             <input type="text" id="plato-nombre" style="width: 100%;">
                         </div>
                         <div class="input-group" style="display: block;">
                             <label>Categoría:</label>
                             <select id="plato-categoria" style="width: 100%;">
-                                <option>Pollos a la Brasa</option>
-                                <option>Parrillas</option>
-                                <option>Bebidas</option>
-                                <option>Guarniciones</option>
+                                <option value="Pollos a la Brasa">Pollos a la Brasa</option>
+                                <option value="Parrillas">Parrillas</option>
+                                <option value="Bebidas">Bebidas</option>
+                                <option value="Guarniciones">Guarniciones</option>
                             </select>
                         </div>
                         <div class="input-group" style="display: block;">
-                            <label>Precio:</label>
-                            <input type="number" id="plato-precio" style="width: 100%;">
+                            <label>Precio Unitario (S/):</label>
+                            <input type="number" id="plato-precio" step="0.10" style="width: 100%;">
                         </div>
-                        <button onclick="simularGuardarPlato()" class="btn-pay" style="width: 100%; background: #f1c40f; color: #333;">➕ Guardar</button>
+                        <button onclick="simularFormularioPlato()" class="btn-pay" style="width: 100%; background: #f1c40f; color: #333;">➕ Insertar en SQL Server</button>
                     </div>
-                    <div class="table-container" style="flex: 2;">
-                        <table>
-                            <thead><tr><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Estado</th></tr></thead>
-                            <tbody id="tabla-platos-body">
-                                </tbody>
+                    <div class="table-container" style="flex: 2; min-width: 450px;">
+                        <h3 style="margin-bottom: 15px; color: #2c3e50;">🍽️ Lista General de Productos Activos</h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background-color: #f8f9fa;">
+                                    <th style="padding: 12px; text-align: left;">Nombre del Producto</th>
+                                    <th style="padding: 12px; text-align: left;">Categoría</th>
+                                    <th style="padding: 12px; text-align: right;">Precio de Venta</th>
+                                    <th style="padding: 12px; text-align: center;">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-platos-body"></tbody>
                         </table>
                     </div>
                 </div>
@@ -163,65 +203,73 @@
             <div id="vista-proveedores" style="display: none; padding: 30px;">
                 <h2 style="text-align: center; font-weight: 700; margin-bottom: 30px;">Directorio de Proveedores</h2>
                 <div class="form-box" style="margin: 0 auto; max-width: 900px; border-top: 6px solid #d35400 !important;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h3 style="margin: 0;">🚚 Mis Proveedores</h3>
-                        <button class="btn-pay" style="background-color: #d35400; padding: 8px 15px; font-size: 14px; margin: 0;">➕ Agregar</button>
-                    </div>
-                    <div class="table-container" style="border: none; padding: 0; box-shadow: none;">
-                        <table style="width: 100%;">
-                            <thead><tr style="background-color: #f8f9fa;"><th>Empresa</th><th>Categoría</th><th>Contacto</th><th>Teléfono</th><th>Acción</th></tr></thead>
-                            <tbody>
-                                <tr><td>Avícola El Buen Pollo</td><td>Carnes (Pollo)</td><td>Carlos Ruiz</td><td>987654321</td><td><button class="btn-secondary">📞 Contactar</button></td></tr>
-                                <tr><td>Agro Distribuciones</td><td>Verduras (Papas)</td><td>María López</td><td>912345678</td><td><button class="btn-secondary">📞 Contactar</button></td></tr>
-                                <tr><td>Gaseosas S.A.</td><td>Bebidas</td><td>Juan Pérez</td><td>999888777</td><td><button class="btn-secondary">📞 Contactar</button></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table style="width: 100%;">
+                        <thead><tr style="background-color: #f8f9fa;"><th>Empresa</th><th>Categoría</th><th>Contacto</th><th>Teléfono</th><th>Acción</th></tr></thead>
+                        <tbody>
+                            <tr><td>Avícola El Buen Pollo</td><td>Carnes (Pollo)</td><td>Carlos Ruiz</td><td>987654321</td><td><button class="btn-secondary">📞 Contactar</button></td></tr>
+                            <tr><td>Agro Distribuciones</td><td>Verduras (Papas)</td><td>María López</td><td>912345678</td><td><button class="btn-secondary">📞 Contactar</button></td></tr>
+                            <tr><td>Gaseosas S.A.</td><td>Bebidas</td><td>Juan Pérez</td><td>999888777</td><td><button class="btn-secondary">📞 Contactar</button></td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
             <div id="vista-pagos" style="display: none; padding: 30px;">
                 <h2 style="text-align: center; font-weight: 700; margin-bottom: 30px;">Métodos de Pago</h2>
-                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                    
-                    <div class="form-box" style="width: 250px; text-align: center; border-top: 6px solid #27ae60 !important; margin: 0;">
-                        <h1 style="font-size: 50px; margin-bottom: 10px;">💵</h1>
-                        <h3>Efectivo</h3>
-                        <p style="color: #7f8c8d; font-size: 13px; margin: 10px 0;">Pago en caja física</p>
-                        <button class="btn-pay" style="width: 100%; font-size: 14px; background: #2c3e50; margin: 0;">Configurar Caja</button>
-                    </div>
-
-                    <div class="form-box" style="width: 250px; text-align: center; border-top: 6px solid #8e44ad !important; margin: 0;">
-                        <h1 style="font-size: 50px; margin-bottom: 10px;">📱</h1>
-                        <h3>Billeteras Digitales</h3>
-                        <p style="color: #7f8c8d; font-size: 13px; margin: 10px 0;">Yape / Plin integrados</p>
-                        <button class="btn-pay" style="width: 100%; font-size: 14px; background: #2c3e50; margin: 0;">Configurar QR</button>
-                    </div>
-
-                    <div class="form-box" style="width: 250px; text-align: center; border-top: 6px solid #2980b9 !important; margin: 0;">
-                        <h1 style="font-size: 50px; margin-bottom: 10px;">💳</h1>
-                        <h3>Tarjeta (POS)</h3>
-                        <p style="color: #7f8c8d; font-size: 13px; margin: 10px 0;">Visa / Mastercard</p>
-                        <button class="btn-pay" style="width: 100%; font-size: 14px; background: #2c3e50; margin: 0;">Configurar Red</button>
-                    </div>
+                <div style="display: flex; gap: 20px; justify-content: center;">
+                    <div class="form-box" style="text-align: center; border-top: 6px solid #27ae60 !important;"><h1>💵</h1><h3>Efectivo</h3></div>
+                    <div class="form-box" style="text-align: center; border-top: 6px solid #8e44ad !important;"><h1>📱</h1><h3>Billeteras</h3></div>
+                    <div class="form-box" style="text-align: center; border-top: 6px solid #2980b9 !important;"><h1>💳</h1><h3>Tarjeta</h3></div>
                 </div>
             </div>
 
             <div id="vista-inventario" style="display: none; padding: 30px;">
                 <h2 style="text-align: center; font-weight: 700; margin-bottom: 30px;">Control de Inventario</h2>
-                <div class="form-box" style="margin: 0 auto; max-width: 900px; border-top: 6px solid #16a085 !important;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h3 style="margin: 0;">📦 Stock Actual en Almacén</h3>
-                        <button class="btn-pay" style="background-color: #16a085; padding: 8px 15px; font-size: 14px; margin: 0;">📥 Ingreso de Mercadería</button>
+                <div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+                    
+                    <div class="form-box" id="card-formulario-insumo" style="flex: 1; max-width: 350px; border-top: 6px solid #16a085 !important; margin: 0;">
+                        <h3 id="lbl-titulo-inventario">📥 Ingreso de Mercadería</h3>
+                        <input type="hidden" id="insumo-id-hidden" value="">
+
+                        <div class="input-group" style="display: block; margin-top: 15px;">
+                            <label>Nombre del Insumo:</label>
+                            <input type="text" id="insumo-nombre" placeholder="Ej. Carbón vegetal">
+                        </div>
+                        <div class="input-group" style="display: block;">
+                            <label>Unidad de Medida:</label>
+                            <select id="insumo-unidad">
+                                <option value="Unidades">Unidades</option>
+                                <option value="Sacos">Sacos</option>
+                                <option value="Kilogramos">Kilogramos</option>
+                                <option value="Bidones">Bidones</option>
+                            </select>
+                        </div>
+                        <div class="input-group" style="display: block;">
+                            <label>Stock Actual en Almacén:</label>
+                            <input type="number" id="insumo-stock" value="0">
+                        </div>
+                        <div class="input-group" style="display: block;">
+                            <label>Alerta Mínima (Stock Mín):</label>
+                            <input type="number" id="insumo-minimo" value="5">
+                        </div>
+                        
+                        <button id="btn-insumo-guardar" onclick="guardarInsumoRealBD()" class="btn-pay" style="width: 100%; background: #16a085;">📥 Insertar en Almacén</button>
+                        <button id="btn-insumo-cancelar" onclick="limpiarFormularioInsumo()" class="btn-secondary" style="width: 100%; margin-top: 8px; display: none;">Cancelar Modificación</button>
                     </div>
-                    <div class="table-container" style="border: none; padding: 0; box-shadow: none;">
-                        <table style="width: 100%;">
-                            <thead><tr style="background-color: #f8f9fa;"><th>Insumo</th><th>Stock Actual</th><th>Unidad</th><th>Estado</th></tr></thead>
-                            <tbody>
-                                <tr><td>Pollos Enteros Macerados</td><td>45</td><td>Unidades</td><td><span style="color: #27ae60; font-weight: bold;">Óptimo</span></td></tr>
-                                <tr><td>Papas Amarillas</td><td>15</td><td>Sacos (50kg)</td><td><span style="color: #27ae60; font-weight: bold;">Óptimo</span></td></tr>
-                                <tr><td>Aceite Vegetal</td><td>2</td><td>Bidones (20L)</td><td><span style="color: #e74c3c; font-weight: bold;">⚠️ Stock Bajo</span></td></tr>
-                            </tbody>
+
+                    <div class="table-container" style="flex: 2; min-width: 450px;">
+                        <h3 style="margin-bottom: 15px; color: #2c3e50;">📦 Stock Actual en Almacén Real</h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background-color: #f8f9fa;">
+                                    <th style="padding: 12px; text-align: left;">Insumo</th>
+                                    <th style="padding: 12px; text-align: center;">Stock Actual</th>
+                                    <th style="padding: 12px; text-align: center;">Unidad</th>
+                                    <th style="padding: 12px; text-align: center;">Estado</th>
+                                    <th style="padding: 12px; text-align: center;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-inventario-body"></tbody>
                         </table>
                     </div>
                 </div>
@@ -230,23 +278,13 @@
             <div id="vista-dashboard" style="display: none; padding: 30px;">
                 <h2 style="margin-bottom: 20px;">Inteligencia de Negocios e IA Predictiva</h2>
                 <div style="display: flex; gap: 20px; margin-bottom: 30px;">
-                    <div class="form-box" style="flex: 1; text-align: center; border-left: 5px solid #1abc9c !important;">
-                        <h4>Ventas Hoy</h4><p style="font-size: 28px; font-weight: bold;">124</p>
-                    </div>
-                    <div class="form-box" style="flex: 1; text-align: center; border-left: 5px solid #e74c3c !important;">
-                        <h4>Mermas</h4><p style="font-size: 28px; font-weight: bold;">2.4%</p>
-                    </div>
-                    <div class="form-box" style="flex: 1; text-align: center; border-left: 5px solid #3498db !important;">
-                        <h4>Proyección Sab (IA)</h4><p style="font-size: 28px; font-weight: bold; color: #2980b9;">210</p>
-                    </div>
+                    <div class="form-box" style="flex: 1; text-align: center; border-left: 5px solid #1abc9c !important;"><h4>Ventas Hoy</h4><p style="font-size: 28px; font-weight: bold;">124</p></div>
+                    <div class="form-box" style="flex: 1; text-align: center; border-left: 5px solid #e74c3c !important;"><h4>Mermas</h4><p style="font-size: 28px; font-weight: bold;">2.4%</p></div>
+                    <div class="form-box" style="flex: 1; text-align: center; border-left: 5px solid #3498db !important;"><h4>Proyección Sáb (IA)</h4><p style="font-size: 28px; font-weight: bold; color: #2980b9;">210</p></div>
                 </div>
                 <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                    <div class="form-box" style="flex: 1; min-width: 400px;">
-                        <h4>📊 Ventas vs Mermas (BI)</h4><canvas id="chartBI"></canvas>
-                    </div>
-                    <div class="form-box" style="flex: 1; min-width: 400px;">
-                        <h4>🤖 Predicción de Demanda (IA)</h4><canvas id="chartIA"></canvas>
-                    </div>
+                    <div class="form-box" style="flex: 1; min-width: 400px;"><h4>📊 Ventas vs Mermas (BI)</h4><canvas id="chartBI"></canvas></div>
+                    <div class="form-box" style="flex: 1; min-width: 400px;"><h4>🤖 Predicción de Demanda (IA)</h4><canvas id="chartIA"></canvas></div>
                 </div>
             </div>
 
@@ -254,126 +292,10 @@
     </div>
 
     <script src="dashboard.js"></script>
-
     <script>
-        // --- 0. GESTIÓN DE SESIONES ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const rol = localStorage.getItem('rolUsuario');
-            
-            if (rol === 'arturo') {
-                document.getElementById('btn-usuarios').style.display = 'none';
-                document.getElementById('btn-proveedores').style.display = 'none';
-                document.getElementById('btn-pagos').style.display = 'none';
-                document.getElementById('btn-inventario').style.display = 'none';
-                document.getElementById('btn-dashboard').style.display = 'none';
-                document.getElementById('info-usuario').innerText = "Vendedor: Arturo";
-            } else if (rol === 'admin') {
-                document.getElementById('info-usuario').innerText = "Admin: Ñufo Ñufales";
-            } else {
-                alert("Debes iniciar sesión primero.");
-                window.location.href = "../Landing_Cliente/Login/login.html";
-            }
-
-            const hoy = new Date();
-            document.getElementById('fecha-actual').innerText = hoy.toLocaleDateString();
-
-            initCharts();
-            
-            // Llamar a la base de datos al iniciar
-            cargarPlatosDesdeBD();
-        });
-
-        // --- 1. LÓGICA DEL POS ---
-        let totalGeneral = 0;
-
-        function agregarAlPOS(nombre, precio) {
-            totalGeneral += precio;
-            const fila = `<tr>
-                <td style="padding: 8px 5px; font-weight: 600;">${nombre}</td>
-                <td style="padding: 8px 5px; text-align: right;">S/ ${precio.toFixed(2)}</td>
-                <td style="padding: 8px 5px; text-align: center;"><button onclick="eliminarFila(this, ${precio})" style="background:#e74c3c; color:white; border:none; border-radius:4px; padding: 3px 8px; cursor:pointer;">X</button></td>
-            </tr>`;
-            document.getElementById('tabla-pos-body').innerHTML += fila;
-            actualizarTotales();
-        }
-
-        function eliminarFila(boton, precio) {
-            totalGeneral -= precio;
-            boton.closest('tr').remove();
-            actualizarTotales();
-        }
-
-        function actualizarTotales() {
-            const igv = totalGeneral * 0.18;
-            document.getElementById('lbl-subtotal').innerText = "S/ " + (totalGeneral - igv).toFixed(2);
-            document.getElementById('lbl-igv').innerText = "S/ " + igv.toFixed(2);
-            document.getElementById('lbl-total').innerText = "S/ " + totalGeneral.toFixed(2);
-        }
-
-        function cobrarVenta() {
-            if(totalGeneral === 0) {
-                alert("La cuenta está en 0. Agrega productos primero.");
-                return;
-            }
-            alert("✅ Venta de S/ " + totalGeneral.toFixed(2) + " cobrada con éxito. Imprimiendo comprobante...");
-            document.getElementById('tabla-pos-body').innerHTML = "";
-            totalGeneral = 0;
-            actualizarTotales();
-        }
-
-        // --- 2. SIMULACIÓN DE PLATOS (VISUAL) ---
-        function simularGuardarPlato() {
-            const n = document.getElementById('plato-nombre').value;
-            const c = document.getElementById('plato-categoria').value;
-            const p = document.getElementById('plato-precio').value;
-            if(!n || !p) return alert("Completa los datos del plato");
-            const fila = `<tr>
-                <td style="font-weight: bold;">${n}</td>
-                <td>${c}</td>
-                <td>S/ ${parseFloat(p).toFixed(2)}</td>
-                <td><span style="color: #27ae60; font-weight: bold;">Activo (Simulado)</span></td>
-            </tr>`;
-            document.getElementById('tabla-platos-body').innerHTML += fila;
-            alert("✅ Plato guardado visualmente");
-            document.getElementById('plato-nombre').value = "";
-            document.getElementById('plato-precio').value = "";
-        }
-
-        // --- 3. GRÁFICOS (BI e IA) ---
-        function initCharts() {
-            new Chart(document.getElementById('chartBI'), {
-                type: 'bar',
-                data: { labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], datasets: [{ label: 'Ventas', data: [45, 50, 48, 60, 120, 180, 190], backgroundColor: '#f1c40f' }, { label: 'Mermas', data: [5, 4, 6, 2, 8, 3, 2], backgroundColor: '#e74c3c' }]}
-            });
-            new Chart(document.getElementById('chartIA'), {
-                type: 'line',
-                data: { labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], datasets: [{ label: 'Predicción IA', data: [42, 48, 55, 65, 130, 210, 225], borderColor: '#2980b9', tension: 0.4, fill: true, backgroundColor: 'rgba(41, 128, 185, 0.1)' }]}
-            });
-        }
-        
-        // --- 4. CONEXIÓN REAL A LA BASE DE DATOS (BACKEND) ---
-        async function cargarPlatosDesdeBD() {
-            try {
-                // Hacemos la petición a tu servidor Python
-                const respuesta = await fetch('http://127.0.0.1:8000/api/platos');
-                const platos = await respuesta.json();
-
-                const tbody = document.getElementById('tabla-platos-body');
-                tbody.innerHTML = ''; // Borramos cualquier plato falso de prueba
-
-                // Llenamos la tabla con los datos reales del SQL Server
-                platos.forEach(plato => {
-                    const fila = `<tr>
-                        <td style="font-weight: bold;">${plato.nombre}</td>
-                        <td>${plato.categoria}</td>
-                        <td>S/ ${plato.precio.toFixed(2)}</td>
-                        <td><span style="color: #27ae60; font-weight: bold;">${plato.estado}</span></td>
-                    </tr>`;
-                    tbody.innerHTML += fila;
-                });
-            } catch (error) {
-                console.error("Error conectando al Backend:", error);
-            }
+        function cerrarSesionSeguro() {
+            localStorage.clear();
+            window.location.href = "../Landing_Cliente/Login/login.html";
         }
     </script>
 </body>
